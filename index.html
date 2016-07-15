@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>gitDuel</title>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+  <header>
+    <section id='topBar'>
+      <iframe id="ghub" src="https://ghbtns.com/github-btn.html?user=robhaj&repo=gitApi&type=star&count=true&size=large" frameborder="0" scrolling="0" width="160px" height="30px"></iframe>
+      <nav id="audioButtons">
+        <span class="glyphicon glyphicon-volume-off"></span>
+        <span class="glyphicon glyphicon-volume-up"></span>
+      </nav>
+    </section>
+  </header>
+  <audio class="audio" autoplay loop>
+    <source src="ass/audio/cowboy.mp3">
+    </audio>
+    <audio class="shot" preload="auto">
+      <source src="ass/audio/gunShot.m4a">
+      </audio>
+      <main class="container">
+        <section class='row'>
+          <div class='col-md-4'>
+            <div id="ghapidata" class="clearfix">
+            </div>
+          </div>
+          <div class='col-md-4' id="heading">
+            <h1>gitDuel</h1>
+            <p>Enter two gitHub usernames and click the button compare.</p>
+            <section id="search">
+              <form id="tag-search">
+                <section class="form-group">
+                  <input type="text" name="ghusername" id="ghusername1" placeholder="Player 1">
+                  <span> &nbsp;<strong> VS </strong>&nbsp; </span>
+                  <input type="text" name="ghusername2" id="ghusername2" placeholder="Player 2">
+                  <br><br>
+                  <button type="submit" id="ghsubmitbtn" class="btn btn-primary btn-lg">Duel</button>
+                </div>
+              </form>
+            </div>
+          </section>
+          <div class='col-md-4'>
+            <div id="ghapidata2" class="clearfix2">
+            </div>
+          </div>
+        </section>
+      </main>
+    </body>
+    </html>
