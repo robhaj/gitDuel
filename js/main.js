@@ -1,60 +1,52 @@
 $(document).ready(function(){
-  //audio controls
   audioEvents();
 });
 
 $(function(){
-  //open click handler
   $('#ghsubmitbtn').on('click', function(e){
     e.preventDefault();
-
-    //loading gif
     loadingGif('#ghapidata');
     loadingGif('#ghapidata2');
-
-    //cache api urls and usernames
+    var player1 = {};
+    var player2 = {};
     var userUrl = 'https://api.github.com/users/';
-    var username1 = $('#ghusername1').val();
-    var username2 = $('#ghusername2').val();
-    var requri1   = userUrl+username1;
-    var requri2   = userUrl+username2;
-    var repouri1  = requri1+'/repos';
-    var repouri2  = requri2+'/repos';
+    player1.username = $('#ghusername1').val();
+    player2.username = $('#ghusername2').val();
+    player1.requri = userUrl+username1;
+    player2.requri = userUrl+username2;
+    player1.repouri = requri1+'/repos';
+    player2.repouri = requri2+'/repos';
 
     //make first ajax req
-    requestJSON(requri1, function(json) {
+    requestJSON(player1.requri, function(json) {
 
       //validation for if invalid/no username
-      if(json.message === "Not Found" || username1 === '') {
+      if(json.message === "Not Found" || player1.username === '') {
         $('#ghapidata').html("<h2>One or more of the users were not found!</h2>");
 
         // else we have a user and we display their info
       } else {
-        var fullname = json.name;
-        var username1 = json.login;
-        var aviurl = json.avatar_url;
-        var profileurl = json.html_url;
-        var location = json.location;
-        var followersnum = json.followers;
-        var followingnum = json.following;
-        var reposnum = json.public_repos;
-        var start = json.created_at;
+        var user1 = {
+          fullname: json.name,
+          username: json.login,
+          aviurl: json.avatar_url,
+          profileurl: json.html_url,
+          location: json.location,
+          followersnum: json.followers,
+          followingnum: json.following,
+          reposnum: json.public_repos,
+          start: json.created_at,
+          splitstamp: start.split('T')[0]
+        }
 
-        //format timestamp
-        var splitStamp = start.split('T')[0];
-        var timeCompare = setCharAt(splitStamp, 4, '');
-            timeCompare = setCharAt(timeCompare, 6, '');
-
-        //name/location validation
-        if(location === '' || location === 'undefined' || location === null) {
+        if(user1.location === '' || user1.location === 'undefined' || user1.location === null) {
           location = "Unknown";
         }
 
-        if(fullname === undefined || fullname === null) {
-          fullname = username1;
+        if(user1.fullname === undefined || user1.fullname === null) {
+          user1.fullname = user1.username;
         }
 
-        //structure output
         var outhtml = `<table class="table"><thead><tr><th><h2>${fullname}
         <span class="smallname">(@<a href="${profileurl}" target="_blank">
         ${username1}</a>)</span></h2></th></tr></thead>
@@ -66,14 +58,35 @@ $(function(){
         <tr><td>Repos:</td><td>${reposnum}</td><td id="repos"></td></tr>
         <tr><td>Account created:</td><td>${splitStamp}</td><td id="start"></td></tr>`
 
+        // var fullname = json.name;
+        // var username1 = json.login;
+        // var aviurl = json.avatar_url;
+        // var profileurl = json.html_url;
+        // var location = json.location;
+        // var followersnum = json.followers;
+        // var followingnum = json.following;
+        // var reposnum = json.public_repos;
+        // var start = json.created_at;
+
+        //format timestamp
+        // var splitStamp = start.split('T')[0];
+        // var timeCompare = setCharAt(splitStamp, 4, '');
+        //     timeCompare = setCharAt(timeCompare, 6, '');
+
+        //name/location validation
+
+
+
+        //structure output
+
         //outputs content1
         function outputPageContent() {
 
-          if(repositories.length === 0) { outhtml += '<p>No repos!</p>'; }
+          if(user1.repos.length === 0) { outhtml += '<p>No repos!</p>'; }
           else {
-            var rand = Math.floor(Math.random() * (repositories.length));
-            var randRepo = repositories[rand];
-            var url = randRepo.html_url;
+            var rand = Math.floor(Math.random() * (user1.repositories.length));
+            user1.randRepo = user1.repositories[rand];
+            var url = user1.randRepo.html_url;
             var rname = randRepo.name;
             var descrip = randRepo.description;
             var language = randRepo.language;
